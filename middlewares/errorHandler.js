@@ -1,4 +1,5 @@
 import { MSG_ERROR } from "../constants.js"
+import { logger } from "../utils/logger.js"
 
 export const errorHandler = function(err, req, res, next) {
     res.status(err.statusCode || 500).json({
@@ -7,9 +8,7 @@ export const errorHandler = function(err, req, res, next) {
         ...(process.env.IS_DEV && err.stack && {stack: err.stack})
     })
     
-    if(err.logger){
-        err.logger.error(`[RESPONSE] ${err.statusCode} :: ${req.method} :: ${req.url} :: ${err.message}`)
-    }
+    logger.error(`[RESPONSE] ${err.statusCode} :: ${req.method} :: ${req.url} :: ${err.message}`)
 }
 
 

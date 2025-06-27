@@ -4,5 +4,6 @@ export const MSG_DB = {
 }
 
 export const MSG_ERROR = {
-    SERVER_ERROR: 'Internal Server Error.'
+    SERVER_ERROR: 'Internal Server Error.',
+    MIME_ERROR: 'Only video files are allowed.'
 }

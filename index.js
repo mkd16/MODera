@@ -1,12 +1,10 @@
 import express from "express"
 import dotenv from "dotenv"
 import { connectDB } from "./DB/database.js"
-import { asyncHandler } from "./utils/asyncHandler.js"
 import { errorHandler } from "./middlewares/errorHandler.js"
 import morgan from "morgan"
 import { logger } from "./utils/logger.js"
-import { ApiError } from "./utils/ApiError.js"
-import { ApiResponse } from "./utils/ApiResponse.js"
+import helmet from "helmet"
 
 dotenv.config()
 const PORT = process.env.PORT || 9001
@@ -16,6 +14,7 @@ const app = express()
 await connectDB();
 
 /* middlewares */
+app.use(helmet())
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 
@@ -28,15 +27,9 @@ app.use(morgan('combined', {
     }
 }));
 
-/* routes */
-app.get('/', asyncHandler((req, res)=>{
-    const response = new ApiResponse(200, 'Success class testing', null, logger)
-    response.send(req, res)
-}))
-app.get('/error', asyncHandler((req, res)=>{
-    throw new ApiError(500, 'Error class testing', logger)
-    res.send('Error response')
-}))
+/* Routing */
+import { userRouter } from "./routes/userRoutes.js"
+app.use("/api/users/", userRouter)
 
 /* global error handler */
 app.use(errorHandler)
