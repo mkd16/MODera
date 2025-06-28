@@ -1,9 +1,10 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const authTokenSchema = mongoose.Schema(
     {
         userId: {
-            type: String,
+            type: Schema.Types.ObjectId,
+            ref: 'User',
             required: [true, 'Select atlease 1 user.'],
             trim: true
         },
@@ -11,23 +12,19 @@ const authTokenSchema = mongoose.Schema(
             type: String,
             enum: ['verification', 'forgot_password', 'refresh_token'],
         },
-        deleted: {
-            type: String,
-            enum: ['0', '1'],
-            default: '0'
-        },
-        used: {
-            type: String,
-            enum: ['0', '1'],
-            default: '0'
-        },
         token: {
             type: String,
+        },
+        used: {
+            type: Boolean,
+            default: false
         }
     },
     {
         timestamps: true
     }
 )
+
+authTokenSchema.index({userId: 1})
 
 export const AuthToken = mongoose.model('AuthToken', authTokenSchema);

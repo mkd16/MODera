@@ -35,9 +35,8 @@ const userSchema = mongoose.Schema(
             default: false
         },
         deleted: {
-            type: String,
-            enum: ['0', '1'],
-            default: '0'
+            type: Boolean,
+            default: false
         }
     },
     {

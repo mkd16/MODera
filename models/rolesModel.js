@@ -1,21 +1,23 @@
 import mongoose from "mongoose";
 
-const rolesSchema = mongoose.Schema(
+const roleSchema = mongoose.Schema(
     {
         role: {
             type: String,
             required: [true, 'Role name is required.'],
-            trim: true
+            trim: true,
+            unique: true
+        },
+        description: {
+            type: String
         },
         activated: {
-            type: String,
-            enum: ['0', '1'],
-            default: '1'
+            type: Boolean,
+            default: true
         },
         deleted: {
-            type: String,
-            enum: ['0', '1'],
-            default: '0'
+            type: Boolean,
+            default: false
         }
     },
     {
@@ -23,4 +25,4 @@ const rolesSchema = mongoose.Schema(
     }
 )
 
-export const Role = mongoose.model('Role', rolesSchema);
+export const Role = mongoose.model('Role', roleSchema);
