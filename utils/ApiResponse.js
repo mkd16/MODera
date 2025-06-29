@@ -1,18 +1,14 @@
+import { logger } from "./logger.js"
+
 class ApiResponse {
-    constructor(statusCode=200, message='Succcess', data=null, logger=null){
+    constructor(message='Succcess', data=null, statusCode=200){
         this.data       = data
         this.message    = message
         this.statusCode = statusCode
-
-        if(logger){
-            this.logger = logger
-        }
     }
     
     send(req, res){
-        if(this.logger){
-            this.logger.info(`[RESPONSE] ${this.statusCode} :: ${req.method} :: ${req.url} :: ${this.message}`)
-        }
+        logger.info(`[RESPONSE] ${this.statusCode} :: ${req.method} :: ${req.url} :: ${this.message}`)
         res.status(this.statusCode).json({
             success : true,
             message : this.message,
