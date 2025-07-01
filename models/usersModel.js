@@ -27,9 +27,6 @@ const userSchema = mongoose.Schema(
         profile: {
             type: String
         },
-        twofaCode: {
-            type: Number
-        },
         verified: {
             type: Boolean,
             default: false

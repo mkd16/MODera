@@ -15,6 +15,9 @@ const authTokenSchema = mongoose.Schema(
         token: {
             type: String,
         },
+        expiry: {
+            type: String
+        },
         used: {
             type: Boolean,
             default: false
