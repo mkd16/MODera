@@ -1,19 +1,15 @@
 import { Router } from "express";
-import { asyncHandler } from "../utils/asyncHandler.js"
-import { ApiResponse } from "../utils/ApiResponse.js"
-import { upload } from "../middlewares/upload.js"
+import { registerUser, verifyUser } from "../controllers/user.js";
 
 /* Function imports */
 
-const checkMark = '\u2714';
-const errorMark = '\u274C';
 const userRouter = Router();
 
-userRouter.route('/').get(asyncHandler((req, res)=>{
-    const response = new ApiResponse(`Users root route.${checkMark}`)
-    response.send(req, res);
-}));
+userRouter.route('/').get((req, res)=>{
+    res.send('Working');
+})
 
-// userRouter.route('/register', upload.single(), )
+userRouter.route('/register').post(registerUser)
+userRouter.route('/verify').post(verifyUser)
 
 export { userRouter }

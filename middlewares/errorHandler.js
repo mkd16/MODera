@@ -2,13 +2,17 @@ import { MSG_ERROR } from "../constants.js"
 import { logger } from "../utils/logger.js"
 
 export const errorHandler = function(err, req, res, next) {
+    try {
+        logger.error(`[RESPONSE] ${err.statusCode} :: ${req.method} :: ${req.url} :: ${err.message}`)
+    } catch (error) {
+        console.log('Error occured while logging.')
+    }
     res.status(err.statusCode || 500).json({
         success: false,
         message: err.message || MSG_ERROR.SERVER_ERROR,
         ...(process.env.IS_DEV && err.stack && {stack: err.stack})
     })
     
-    logger.error(`[RESPONSE] ${err.statusCode} :: ${req.method} :: ${req.url} :: ${err.message}`)
 }
 
 
