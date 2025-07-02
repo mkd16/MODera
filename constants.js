@@ -14,10 +14,13 @@ export const MSG_ERROR = {
     DOES_NOT_EXISTS: 'does not exists.',
     EXPIRED: 'Verification token expired.',
     MATCH: 'did not matched',
-    REGISTER: 'Error occured while registering user. Please register again.'
+    REGISTER: 'Error occured while registering user. Please register again.',
+    FIELD_REQUIRED: 'is required.',
+    NOT_VERIFIED: `is not verified. Please verify before login.`
 }
 
 export const MSG_SUCCESS = {
     CREATED: 'create successfully.',
     VERIFIED: 'verified successfully.',
+    LOGGED_IN: 'User logged in successfully.'
 }
