@@ -1,21 +1,30 @@
 import { logger } from "./logger.js"
 
 class ApiResponse {
-    constructor(message='Succcess', data=null, statusCode=200){
+    constructor(message='Success', data=null, statusCode=200){
         this.data       = data
         this.message    = message
         this.statusCode = statusCode
         this.cookies = []
+        this.cookiesToClear = [];
     }
     
-    setCookies({name, value, options={}}){
+    setCookies(name, value, options={}){
         this.cookies.push({name, value, options})
         return this
+    }
+
+    clearCookies(name, options={}){
+        this.cookiesToClear.push({name, options})
+        return this;
     }
 
     send(req, res){
         for(const {name, value, options} of this.cookies){
             res.cookie(name, value, options)
+        }
+        for(const {name, options} of this.cookiesToClear){
+            res.clearCookie(name, options);
         }
 
         logger.info(`[RESPONSE] ${this.statusCode} :: ${req.method} :: ${req.url} :: ${this.message}`)
